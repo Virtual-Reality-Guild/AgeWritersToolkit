@@ -33,10 +33,15 @@
             if (now >= _holidayStart && now <= _holidayStart.AddDays(Duration))
             {
                 Debug.Log("It is holiday time!");
-                foreach (GameObject obj in HolidayObjects)
+                foreach (GameObject go in HolidayObjects)
                 {
-                    obj.SetActive(true);
+                    go.SetActive(true);
                 }
+            }
+            else
+            {
+                foreach (GameObject go in HolidayObjects)
+                    go.SetActive(false);
             }
         }
     }

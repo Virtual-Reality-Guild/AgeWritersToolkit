@@ -86,7 +86,7 @@ MonoBehaviour:
         stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
     - fullName: Event_Custom
       uid: dd2464c9-d66f-44b5-8979-2413709bdc79
-      position: {x: 411, y: 328}
+      position: {x: 451.99753, y: 268.48752}
       nodeUIDs:
       - 
       flowUIDs:

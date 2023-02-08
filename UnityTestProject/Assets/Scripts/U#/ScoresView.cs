@@ -51,11 +51,10 @@
                 }
             }
 
-            //Else, if the player's name was not found in the list, we need to add it to the first available spot
+            //Else, If the player's name was not found in the list, we need to add it to the first available spot
             for (int j = 0; j < _playerNames.Length; j++)
             {
-                //If our new player's score is higher than an existing player's score, we need to bump them off the list
-                if (string.IsNullOrEmpty(_playerNames[j]) || score > _playerScores[j])
+                if (string.IsNullOrEmpty(_playerNames[j]))
                 {
                     _playerNames[j] = playerName;
                     _playerScores[j] = score;
@@ -65,7 +64,26 @@
                     return;
                 }
             }
+            
+            //Else, If our new player's score is higher than an existing player's score, we need to bump them off the list
+            //NOTE: If a player gets bumped off the list, we will lose all their score information, so we may want to increase
+            //      the PlayerNames/Scores array sizes if we expect many more players and then truncate the data on the UI side
+            if(score > _playerScores[_playerScores.Length - 1])
+            {
+                _playerNames[_playerScores.Length - 1] = playerName;
+                _playerScores[_playerScores.Length - 1] = score;
+                SortArrays();
+                UpdateView();
+                RequestSerialization();
+            }
+        }
 
+        public void Test()
+        {
+            string playerName = $"TestPlayer {Random.Range(0, 20)}";
+            int playerScore = Random.Range(0, 100);
+            Debug.Log($"Adding {playerScore} points for player {playerName}");
+            AddPlayerScore(playerName, playerScore);
         }
 
         /// <summary>

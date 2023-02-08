@@ -47,10 +47,12 @@
         private float _elapsedTime = 0.0f; //Time since the lights were last toggled
         private bool _resetState = false;
         private bool _isRunning = false;
+        private Color _defaultEmission;
 
         private void Start()
         {
             EmissiveMaterial.EnableKeyword("_EMISSION");
+            _defaultEmission = EmissiveMaterial.GetColor("_EmissionColor");
             _elapsedTime = FadeLength + 1; // Make sure we do nothing when we first start
         }
 
@@ -146,17 +148,17 @@
             if (EmissiveMaterial != null)
             {
                 Color emissionValue;
+                Color.RGBToHSV(_defaultEmission, out float H, out float S, out float V);
                 if (isOn)
                 {
                     //Turning lights on
-                    emissionValue = Color.HSVToRGB(0, 0, Mathf.Lerp(EmissionValueMin, EmissionValueMax, _elapsedTime / FadeLength));
+                    emissionValue = Color.HSVToRGB(H, S, V * Mathf.Lerp(EmissionValueMin, EmissionValueMax, _elapsedTime / FadeLength));
                 }
                 else
                 {
                     //Turning lights off
-                    emissionValue = Color.HSVToRGB(0, 0, Mathf.Lerp(EmissionValueMax, EmissionValueMin, _elapsedTime / FadeLength));
+                    emissionValue = Color.HSVToRGB(H, S, V * Mathf.Lerp(EmissionValueMax, EmissionValueMin, _elapsedTime / FadeLength));
                 }
-
                 EmissiveMaterial.SetColor("_EmissionColor", emissionValue * EmissionIntensity);
             }
         }
